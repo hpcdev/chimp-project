@@ -1,0 +1,9 @@
+[submodule "olson-tools"]
+	path = olson-tools
+	url = ../olson-tools.git
+[submodule "physical"]
+	path = physical
+	url = ../physical.git
+[submodule "chimp"]
+	path = chimp
+	url = ../chimp.git
