@@ -1,12 +1,9 @@
 #!/bin/bash
 
-echo $0
 TOP_DIR=$( readlink -n -f $(dirname $0) )
-echo TOP_DIR=$TOP_DIR
-exit
 
 # detect whether boost/bootstrap.sh has been executed yet and if not, do so
-if test -f boost/bjam -a -x boost/bjam ; then
+if test -f "${TOP_DIR}/boost/bjam" -a -x "${TOP_DIR}/boost/bjam" ; then
     echo boost/bjam  already built
 else
     echo Note:  any options passed in on the command line will be passed to
@@ -18,10 +15,10 @@ else
 fi
 
 #need to make sure that the boost-build path is set
-export BOOST_BUILD_PATH=$TOP_DIR/boost/tools/build/v2/
+export BOOST_BUILD_PATH=${TOP_DIR}/boost/tools/build/v2/
 
 # put the boost sub-project into the path so that we can get bjam correctly
-export PATH=$TOP_DIR/boost:$PATH
+export PATH=${TOP_DIR}/boost:$PATH
 
 echo "Entering login shell with the proper environment changes"
 exec $SHELL
