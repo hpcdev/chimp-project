@@ -2,6 +2,13 @@
 
 TOP_DIR=$( readlink -n -f $(dirname $0) )
 
+if [ "$1" = "--do-not-start-shell" ] ; then
+    START_SHELL="no"
+    shift 1
+else
+    START_SHELL="yes"
+fi;
+
 # detect whether boost/bootstrap.sh has been executed yet and if not, do so
 if test -f "${TOP_DIR}/boost/bjam" -a -x "${TOP_DIR}/boost/bjam" ; then
     echo boost/bjam  already built
@@ -27,7 +34,7 @@ if [ "$( echo $SHELL|grep bash )" != "" ] ; then
     SHELL_ARGS="--rcfile ${TOP_DIR}/.bashrc"
 fi
 
-if [ "$1" != "--do-not-start-shell" ] ; then
+if [ "$START_SHELL" = "yes" ] ; then
     echo "Entering login shell with the proper environment changes"
     exec $SHELL ${SHELL_ARGS}
 fi;
