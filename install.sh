@@ -1,20 +1,18 @@
 #!/bin/bash
 
-declare -A DEF
-DEF["install"]="$(pwd)/install"
-DEF["build"]="$(pwd)/BuildArea"
-DEF["variant"]="release"
+DEF_install="$(pwd)/install"
+DEF_build="$(pwd)/BuildArea"
+DEF_variant="release"
 
 components="boost chimp olson-tools physical"
-declare -A component_args
-component_args["boost"]="--with-regex"
+component_args_boost="--with-regex"
 
 function usage() {
     echo "$0 [options]"
     echo "    The options can be any bjam option including:"
-    echo "      --prefix=/path/to/install/into     Default:  ${DEF["install"]}"
-    echo "      --build-dir=/path/for/building     Default:  ${DEF["build"]}"
-    echo "      variant=[debug,release,profile]    Default:  ${DEF["variant"]}"
+    echo "      --prefix=/path/to/install/into     Default:  ${DEF_install}"
+    echo "      --build-dir=/path/for/building     Default:  ${DEF_build}"
+    echo "      variant=[debug,release,profile]    Default:  ${DEF_variant}"
     echo ""
     echo "        you can also just specify [debug|release|profile] instead of"
     echo "        using the 'variant=' prefix.  "
@@ -23,7 +21,8 @@ function usage() {
     printf "component\t\tcomponent specific arguments\n"
     printf "*********\t\t******************\n"
     for i in $components; do
-        printf "  %s\t\t%s\n" $i ${component_args[$i]}
+        eval "args=\${component_args_${i//-/_}}"
+        printf "  %s\t\t%s\n" $i $args
     done
     echo ""
     echo "      --help show this message"
@@ -44,18 +43,18 @@ if [ "$(arg_set '--help')" ]; then
 fi
 
 if [ ! "$(arg_set '--prefix')" ]; then
-    prefix="--prefix=${DEF["install"]}"
+    prefix="--prefix=${DEF_install}"
 fi
 
 if [ ! "$(arg_set '--build-dir')" ]; then
-    build_dir="--build-dir=${DEF["build"]}"
+    build_dir="--build-dir=${DEF_build}"
 fi
 
 if [ ! "$(arg_set 'variant=')" -a \
      ! "$(arg_set release)" -a \
      ! "$(arg_set debug)" -a \
      ! "$(arg_set profile)" ]; then
-    variant="variant=${DEF["variant"]}"
+    variant="variant=${DEF_variant}"
 fi
 
 # lets first make sure that the Boost.Build system is up and running...
@@ -65,7 +64,8 @@ for i in $components; do
     pushd $i > /dev/null
     echo "building sub-component $i..."
     sleep .8
-    bjam ${component_args[$i]} ${build_dir} ${variant} install ${prefix} "$@"
+    eval "args=\${component_args_${i//-/_}}"
+    bjam ${args} ${build_dir} ${variant} install ${prefix} "$@"
     popd > /dev/null
 done
 
