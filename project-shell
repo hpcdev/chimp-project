@@ -20,5 +20,14 @@ export BOOST_BUILD_PATH=${TOP_DIR}/boost/tools/build/v2/
 # put the boost sub-project into the path so that we can get bjam correctly
 export PATH=${TOP_DIR}/boost:$PATH
 
-echo "Entering login shell with the proper environment changes"
-exec $SHELL
+SHELL_ARGS=""
+
+# some coolness for bash:
+if [ "$( echo $SHELL|grep bash )" != "" ] ; then
+    SHELL_ARGS="--rcfile ${TOP_DIR}/.bashrc"
+fi
+
+if [ "$1" != "--do-not-start-shell" ] ; then
+    echo "Entering login shell with the proper environment changes"
+    exec $SHELL ${SHELL_ARGS}
+fi;
