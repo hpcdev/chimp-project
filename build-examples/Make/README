@@ -1,0 +1,5 @@
+This is the README for the external Chimp example using traditional make.
+
+The build is performed by invoking make such as:
+    make
+

@@ -1,0 +1,54 @@
+This is the README for the external Chimp example using Boost.Build.
+
+The build is performed by invoking bjam such as:
+    bjam [options] [properties] [targets]
+
+If no targets are specified, it will build all targets configured, unless they
+have been defined as explicit targets.
+
+
+Some of the properties that you can set are
+
+  toolset=toolset         Indicates the toolset to build with, such as gcc,
+                          intel, cw (code warrior), pgi, etc.  Your default is
+                          most likely gcc.
+
+  variant=debug|release   Select the build variant
+
+  define=                 Specify a -D flag to define a macro, such as
+                          define=MYMASK=0x1001
+
+  linkflags=              Provide more link flags, such as linkflags=-lxml2
+
+  cflags=                 Provide more cflags, such as cflags=-I/path/include
+
+  cxxflags=               Provide more cxxflags, such as cxxflags=-I/path/
+
+  link=static|shared      Whether to build static or shared libraries
+
+  threading=single|multi  Whether to build single or multithreaded binaries
+
+  runtime-link=static|shared      
+                          Whether to link to static or shared C and C++ runtime.
+  
+ For more information about BJam, see:
+   chimp-project/boost/doc/html/jam.html
+
+ For more information about Boost.Build, see:
+   chimp-project/boost/tools/build/v2/index.html
+
+
+The root configuration file is called "Jamroot" with all subdirectories of a
+project being called "Jamfile".  In this Jamroot, one target executable is
+defined using the following rule:
+
+exe <binary-name>
+    : <source-code>
+      [ <libraries> ...]
+  [ : [<per-executable-properties> ...]  ]
+    ;
+
+See the 'Builtin rules' section from
+chimp-project/boost/tools/build/v2/index.html for more details.
+
+NOTE:   Spaces betwen ALL tokens are REQUIRED.

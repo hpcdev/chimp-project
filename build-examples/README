@@ -1,0 +1,31 @@
+This directory contains examples of building code external to the chimp project.
+Included are examples of building the exact same code using the following build
+systems:
+      system         directory          NOTES
+    -----------     -----------         -----------
+    Boost.Build        BJam             Imports chimp into project using
+                                        'use-project' rule.  All other
+                                        dependencies (linking and include
+                                        directories) are automatically provided.  
+
+    Kitware CMake      CMake-external   Using an installed version of chimp and
+                                        associated libraries.  This only
+                                        provides link-dependency tracking in the
+                                        application code and not between chimp
+                                        (and others) and application code. 
+
+    Kitware CMake      CMake-internal   Using chimp and associated libraries as
+                                        sub-projects, such that you use
+                                        'add_subdirectory' to add chimp (and
+                                        others) into your project.
+                                        This build-type provides cross library
+                                        link-dependency tracking.
+                                        THIS EXAMPLE IS NOT YET FINISHED!
+
+    Traditional        Make             Makefile must explicitly specify all
+                                        linking dependencies and include
+                                        directories.  
+
+The code compiled by each of these examples is a copy of the
+chimp/examples/RuntimeDB example code, placed external to the chimp package just
+to demonstrate different ways that one might build.  

@@ -1,0 +1,16 @@
+# The BJam configuration for the external Chimp example.
+# Usage:
+#
+#   bjam [options] [properties] [targets]
+#
+# Some of the options:
+#
+#   --build-dir=DIR         Build in this location instead of building
+#                           within the distribution tree. Recommended!
+#
+#   --help                  This message.
+
+use-project /chimp : ../../chimp ;
+
+# define the executable and explicit dependencies.  
+exe testRuntimeDB : testRuntimeDB.cpp /chimp//particledb ;
