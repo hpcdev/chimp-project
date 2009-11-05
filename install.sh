@@ -5,7 +5,7 @@ DEF_build="$(pwd)/BuildArea"
 DEF_variant="release"
 
 components=" boost chimp olson-tools physical "
-component_args_boost="--with-regex"
+component_args_boost=" --with-regex link=static "
 
 function usage() {
     echo "$0 [component list] [--] [options] [--help]"
@@ -20,7 +20,7 @@ function usage() {
     printf "      *********\t\t******************\n"
     for i in $components; do
         eval "      args=\${component_args_${i//-/_}}"
-        printf "        %s\t\t%s\n" $i $args
+        printf "        %s\t\t%s\n" "$i" "$args"
     done
     echo ""
     echo "    The optional '--' separation characters may be necessary if a"
