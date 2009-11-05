@@ -4,11 +4,28 @@ DEF_install="$(pwd)/install"
 DEF_build="$(pwd)/BuildArea"
 DEF_variant="release"
 
-components="boost chimp olson-tools physical"
+components=" boost chimp olson-tools physical "
 component_args_boost="--with-regex"
 
 function usage() {
-    echo "$0 [options]"
+    echo "$0 [component list] [--] [options] [--help]"
+    echo "    [component list]:  The components to build and install"
+    echo "      If you don't specify a component to build and install, all"
+    echo "      components will be built and installed."
+    echo "      NOTE:  for simplicity of this script, the component list MUST"
+    echo "      be first in the list of command line arguments to this script"
+    echo ""
+    echo "      Currently, the following pieces will be compiled and installed:"
+    printf "      component\t\tcomponent specific arguments\n"
+    printf "      *********\t\t******************\n"
+    for i in $components; do
+        eval "      args=\${component_args_${i//-/_}}"
+        printf "        %s\t\t%s\n" $i $args
+    done
+    echo ""
+    echo "    The optional '--' separation characters may be necessary if a"
+    echo "    component happens to have the same name as a bjam option."
+    echo ""
     echo "    The options can be any bjam option including:"
     echo "      --prefix=/path/to/install/into     Default:  ${DEF_install}"
     echo "          Be warned that this must be an ABSOLUTE path"
@@ -23,16 +40,29 @@ function usage() {
     echo "        you can also just specify [debug|release|profile] instead of"
     echo "        using the 'variant=' prefix.  "
     echo ""
-    echo "Currently, the following pieces will be compiled and installed:"
-    printf "component\t\tcomponent specific arguments\n"
-    printf "*********\t\t******************\n"
-    for i in $components; do
-        eval "args=\${component_args_${i//-/_}}"
-        printf "  %s\t\t%s\n" $i $args
-    done
-    echo ""
-    echo "      --help show this message"
+    echo "    --help show this message"
 }
+
+# create list of componets requested to build
+requested_components=""
+for i in "$@" ; do
+    if [ "${components// $i /}" != "${components}" ]; then
+        shift 1
+        requested_components=" $requested_components $i "
+    else
+        break
+    fi
+done
+
+if [ "$requested_components" != "" ]; then
+    components="$requested_components"
+fi
+
+#get rid of the possible -- separation character
+if [ "$1" = "--" ]; then
+    shift 1
+fi
+
 
 
 all_args="$*"
