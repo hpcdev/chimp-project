@@ -48,3 +48,7 @@ else
     export PS1='\u@\h:\w$(parse_git_branch)$ '
 fi
 
+function gstat {
+    (git status ||:) && git submodule foreach 'git status || : '
+}
+export -f gstat
