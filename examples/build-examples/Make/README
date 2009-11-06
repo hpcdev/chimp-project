@@ -1,5 +1,9 @@
 This is the README for the external Chimp example using traditional make.
 
+Before building this example, you must run the install.sh script in the
+chimp-project root directory.  The Makefile for this example expects to find
+chimp and associated libs/includes in the default install location.
+
 The build is performed by invoking make such as:
     make
 
