@@ -1,0 +1,17 @@
+
+CHIMP_INSTALL_DIR       = @CHIMP_INSTALL_DIR@
+XML2_LIBS       = $(shell xml2-config --libs)
+XML2_CFLAGS     = $(shell xml2-config --cflags)
+
+CHIMP_DEFINES   = -DRUNTIME_PHYSICAL_QUANTITY="std::complex<double>" # -DUSE_SPENCERS_FAST_POW
+
+PARTICLEDB_XML  = -DPARTICLEDB_XML=\"$(CHIMP_INSTALL_DIR)/share/chimp/data/particledb.xml\"
+
+CHIMP_LDLIBS    = -lparticledb -lphysical -lrandom -lmisc -lboost_regex $(XML2_LIBS)
+CHIMP_LDFLAGS   = -L$(CHIMP_INSTALL_DIR)/lib
+CHIMP_INCLUDES  = -I$(CHIMP_INSTALL_DIR)/include
+CHIMP_CPPFLAGS  = $(CHIMP_INCLUDES) \
+                  $(PARTICLEDB_XML) \
+                  $(CHIMP_DEFINES) \
+                  $(XML2_CFLAGS)
+

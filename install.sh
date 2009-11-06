@@ -67,29 +67,34 @@ fi
 
 all_args="$*"
 function arg_set() {
-    if [ "${all_args//$1/}" != "${all_args}" ]; then
+    grep_result=$(echo " ${all_args} " | grep "$1")
+    if [ "$grep_result" != "" ]; then
         echo 1
         return 1
     fi
 }
 
-if [ "$(arg_set '--help')" ]; then
+if [ "$(arg_set '\(--\)help')" ]; then
     usage
     exit;
 fi
 
-if [ ! "$(arg_set '--prefix')" ]; then
+if [ ! "$(arg_set '\(--\)prefix')" ]; then
     prefix="--prefix=${DEF_install}"
+    install_dir="${DEF_install}"
+else
+    install_dir=$(echo "${all_args}" | \
+        sed -e "s/.*--prefix=\([^[:space:]]*\)\s*.*/\1/")
 fi
 
-if [ ! "$(arg_set '--build-dir')" ]; then
+if [ ! "$(arg_set '\(--\)build-dir')" ]; then
     build_dir="--build-dir=${DEF_build}"
 fi
 
-if [ ! "$(arg_set 'variant=')" -a \
-     ! "$(arg_set release)" -a \
-     ! "$(arg_set debug)" -a \
-     ! "$(arg_set profile)" ]; then
+if [ ! "$(arg_set '[[:space:]]\<variant=')" -a \
+     ! "$(arg_set '[[:space:]]\<release[[:space:]]\>')" -a \
+     ! "$(arg_set '[[:space:]]\<debug\>[[:space:]]')" -a \
+     ! "$(arg_set '[[:space:]]\<profile\>[[:space:]]')" ]; then
     variant="variant=${DEF_variant}"
 fi
 
@@ -105,3 +110,10 @@ for i in $components; do
     popd > /dev/null
 done
 
+# copy over the build config for Make and CMake
+for i in Makefile.chimp-project ; do
+    echo "installing $i to ${install_dir}"
+    mkdir -p ${install_dir}/share/chimp
+    cat "$i" | sed -e "s/@CHIMP_INSTALL_DIR@/${install_dir//\//\\/}/" > \
+        ${install_dir}/share/chimp/$i
+done
