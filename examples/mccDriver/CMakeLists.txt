@@ -1,12 +1,12 @@
 cmake_minimum_required(VERSION 2.6)
 
-project( GlobalPic )
+project( mccDriver )
 
 find_package( LibXml2 REQUIRED )
 
 include_directories(
   ${LIBXML2_INCLUDE_DIR}
-  ${GlobalPic_SOURCE_DIR}
+  ${mccDriver_SOURCE_DIR}
   /home/shane/Project/chimp-project/install/include )
 
 add_definitions( 
@@ -15,9 +15,9 @@ add_definitions(
 link_directories(
   /home/shane/Project/chimp-project/install/lib )
 
-add_executable( GlobalPicConsole main.cpp )
+add_executable( mccDriverConsole main.cpp )
 
-target_link_libraries( GlobalPicConsole
+target_link_libraries( mccDriverConsole
   misc
   random
   particledb
