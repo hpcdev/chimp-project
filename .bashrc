@@ -6,7 +6,7 @@ fi
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
-    xterm-color|xterm|linux) color_prompt=yes;;
+    *cygwin*|xterm*|linux) color_prompt=yes;;
 esac
 
 # some stuff taken from the debian bashrc for detecting color support
