@@ -1,0 +1,9 @@
+/home/shane/Project/chimp-project/chimp/data/particledb.xml
+100.e-9		# dt
+20000.e-9 	# end time
+4000.e-9 	# print output dt
+10000 # of particles per species to print out
+1.e-15    # domain volume in m^3
+Ar 			1000000 	300.0 			0.0 0.0 0.0  # species, number of particles, initial temperature K, drift velocity x/y/z
+Ar 			1000000 	0.0 			0.0 600.0 0.0  # species, number of particles, initial temperature K, drift velocity x/y/z
+e^-    10000      10000.0 0.0 0.0 0.0
