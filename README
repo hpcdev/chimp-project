@@ -1,0 +1,28 @@
+Chimp-project:  git superproject for developing with the CHIMP library
+    - Co-authored by Air Force Research Lab (U.S. Government)
+
+
+The scripts in this super-project are released under the GPL V2 license. 
+Each of the git submodules (stand-alone git repositories) are released with
+their own conditions and licensing.
+
+
+components:
+---------------------------------
+project-shell   Loads the users login shell with Boost.Build prepared and bjam
+                in the search path.  
+INSTALL         Description of how one can install this package
+install.sh      The install script when not using Boost.Build (bjam)
+README          Brief description of this package
+examples        Demonstration of using CHIMP with several build systems.
+Makefile.chimp-project  Installed Makefile helper to be included (see example)
+
+submodules:
+---------------------------------
+chimp           The CHIMP package
+boost           Boost:  We need Boost.Spirit, Boost.Regex, Boost.smart_ptr
+olson-tools     Assortment of numerical tools I've written/gathered over the years
+                Note:  The pieces required by CHIMP will be broken off into a
+                smaller more specialized library in the future.
+physical        Physical constants, units, conversion, and calculator library
+
