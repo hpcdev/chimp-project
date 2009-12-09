@@ -6,7 +6,8 @@
 #include <chimp/interaction/v_rel_fnc.h>
 
 #include <olson-tools/upper_triangle.h>
-#include <olson-tools/Distribution.h>
+#include <olson-tools/distribution/Inverter.h>
+#include <olson-tools/distribution/Gaussian.h>
 
 #include <physical/physical.h>
 
@@ -46,8 +47,6 @@ int main() {
 
   /* set up the the runtime database */
   db.initBinaryInteractions();
-  /* close the xml-file and free associated resources. */
-  db.xmlDb.close();
 
 
   /* *** BEGIN Set up data (single and cross species). ***
@@ -56,12 +55,13 @@ int main() {
    * use of the chimp library and information that would typically be required
    * per cell in a gridded type of simulation. */
   /** velocity distributions. */
-  std::vector< olson_tools::Distribution > velocity;
+  std::vector< olson_tools::distribution::Inverter > velocity;
   /** max(sigma * v_rel). */
   olson_tools::upper_triangle<double> maxSigmaVelProduct;
   {
-    typedef olson_tools::Distribution D;
-    typedef olson_tools::GaussianDistrib G;
+    namespace dist = olson_tools::distribution;
+    using dist::Inverter;
+    using dist::Gaussian;
     typedef DB::PropertiesVector::const_iterator PIter;
     using chimp::property::mass;
     using chimp::interaction::estMaxVFromStdV;
@@ -74,12 +74,13 @@ int main() {
        * temperature. */
       double beta = 0.5 * i->mass::value / (K_B * temperature);
       double sigma = std::sqrt( 0.5 / beta );
-      velocity.push_back( D( G(beta), -4*sigma, 4*sigma ) );
+      velocity.push_back( Inverter( Gaussian(beta), -4*sigma, 4*sigma ) );
 
       /* now set cross species data for i */
       for ( PIter j  = i; j != end; ++j ) {
-        double reduced_mass = i->mass::value * j->mass::value
+        double reduced_mass =   i->mass::value * j->mass::value
                             / ( i->mass::value + j->mass::value);
+        // FIXME:  I forgot to call db(i,j).cs->findMaxSigmaVProduct( max_v )
         maxSigmaVelProduct.push_back(
           estMaxVFromStdV( calcStdVFromT( temperature, reduced_mass ) )
         );
@@ -104,7 +105,8 @@ int main() {
     const int & B = i->lhs.B.species;
 
     if (i->rhs.size() == 0)
-        continue;
+      /* no interactions for these inputs. */
+      continue;
 
     /* for this test, we'll just pick the velocity randomly from the Maxwellian
      * distribution. */
