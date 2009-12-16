@@ -4,7 +4,7 @@ DEF_install="$(pwd)/install"
 DEF_build="$(pwd)/BuildArea"
 DEF_variant="release"
 
-components=" boost chimp olson-tools physical "
+components=" boost physical olson-tools chimp "
 component_args_boost=" --with-regex link=static "
 
 function usage() {
@@ -103,10 +103,17 @@ fi
 
 for i in $components; do
     pushd $i > /dev/null
-    echo "building sub-component $i..."
-    sleep .8
-    eval "args=\${component_args_${i//-/_}}"
-    bjam ${args} ${build_dir} ${variant} install ${prefix} "$@"
+      if [ -d docs/api -a -f docs/api/Jamfile -a -f docs/api/Doxyfile ]; then
+          echo "building sub-component $i documentation..."
+          sleep .8
+          pushd docs/api > /dev/null
+            bjam
+          popd > /dev/null
+      fi
+      echo "building sub-component $i..."
+      sleep .8
+      eval "args=\${component_args_${i//-/_}}"
+      bjam ${args} ${build_dir} ${variant} install ${prefix} "$@"
     popd > /dev/null
 done
 
