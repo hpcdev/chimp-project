@@ -1,28 +1,31 @@
 Installation Instructions
 *************************
+PREREQUISITES:
+    1.  Download Boost from http://www.boost.org
+        Currently 1.40.0 and 1.41.0 are known to work for CHIMP.  Some earlier
+        and later versions may work also.  Portability issues for non-standard
+        systems, such as often found in large HPC environments, seem to still
+        vary from Boost version to Boost version.  
+    2.  Extract the Boost archive and rename it such that it resides in this
+        directory with the name of 'boost'.  Alternatively, a softlink to the
+        boost directory can be made.  In other words, 'chimp-project/boost'
+        should contain the boost distribution.
 
-If you use Boost.Build/bjam:
+        In the future, it should become possible to use a previously installed
+        copy of boost.
+
+
+The next steps depend on whether you will use Boost.Build/bjam or whether you
+want things installed in the traditional sense:
+
+IF YOU USE Boost.Build/bjam:
     1.  execute the project-shell script
     2.  Build your stuff like normal
         (see examples/build-examples/BJam for a sample Boost.Build project)
-    3.  Have fun
 
 
-  NOTES--The project-shell script does the following:
-    1.  Makes sure that Boost.Build is configured
-    2.  Builds bjam
-    3.  Puts bjam into your search path
-    4.  Sets up your environment so bjam can find the Boost.Build files
-    5.  Starts up a new instance of your own login shell
-        If you happen to use bash it also:
-            a.  Changes your command prompt to show you the current git branch
-                and its status
-            b.  Creates the gstat command that will show the status of the
-                currently checked out branch as well as the currently checkout
-                branches of ALL submodules.
-
-
-If you want to use something else and perform a typical build/install process:
+IF YOU DO NOT WANT TO USE Boost.Build/bjam but rather perform a typical
+    build/install process:
     1.  execute the install.sh script
         This script performs all of its operations in a project-shell (ensuring
         Boost.Build availability).
@@ -35,4 +38,20 @@ If you want to use something else and perform a typical build/install process:
         satisfy any dependencies for CHIMP and its direct dependencies.  
         (see the examples/build-examples directory for usage help--assuming that
         the installtion has already taken place.)
+
+
+
+
+NOTES--The project-shell script does the following:
+  1.  Makes sure that Boost.Build is configured
+  2.  Builds bjam
+  3.  Puts bjam into your search path
+  4.  Sets up your environment so bjam can find the Boost.Build files
+  5.  Starts up a new instance of your own login shell
+      If you happen to use bash it also:
+          a.  Changes your command prompt to show you the current git branch
+              and its status
+          b.  Creates the gstat command that will show the status of the
+              currently checked out branch as well as the currently checkout
+              branches of ALL submodules.
 
