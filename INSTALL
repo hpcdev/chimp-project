@@ -11,6 +11,16 @@ PREREQUISITES:
         boost directory can be made.  In other words, 'chimp-project/boost'
         should contain the boost distribution.
 
+        The following boost copy (bcp) command copies a MUCH slimmer version of
+        boost that contains everything needed to compile CHIMP and its
+        dependencies and not necessarily anything else:
+
+            bcp --boost=/path/to/boost/distribution \
+                 regex shared_ptr math/tools/roots.hpp math/complex \
+                 static_assert test bootstrap.sh \
+                 build jam Jamroot Jamfile Jamfile.v2 \
+                 /path/to/output/directory/
+
         In the future, it should become possible to use a previously installed
         copy of boost.
 
