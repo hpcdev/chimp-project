@@ -21,8 +21,6 @@ submodules:
 ---------------------------------
 chimp           The CHIMP package
 boost           Boost:  We need Boost.Spirit, Boost.Regex, Boost.smart_ptr
-olson-tools     Assortment of numerical tools I've written/gathered over the years
-                Note:  The pieces required by CHIMP will be broken off into a
-                smaller more specialized library in the future.
+xylose          Assortment of numerical tools
 physical        Physical constants, units, conversion, and calculator library
 

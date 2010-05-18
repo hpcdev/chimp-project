@@ -14,3 +14,5 @@ use-project /chimp : ../../../chimp ;
 
 # define the executable and explicit dependencies.  
 exe testRuntimeDB : testRuntimeDB.cpp /chimp//particledb ;
+
+install convenient-copy : testRuntimeDB : <location>. ;

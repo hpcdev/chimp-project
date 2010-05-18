@@ -4,7 +4,7 @@ DEF_install="$(pwd)/install"
 DEF_build="$(pwd)/BuildArea"
 DEF_variant="release"
 
-components=" boost physical olson-tools chimp "
+components=" boost physical xylose chimp "
 component_args_boost=" --with-regex link=static "
 
 function usage() {
