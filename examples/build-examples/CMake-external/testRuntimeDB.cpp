@@ -29,6 +29,7 @@
 #include <chimp/interaction/v_rel_fnc.h>
 
 #include <xylose/upper_triangle.h>
+#include <xylose/random/Kiss.hpp>
 #include <xylose/distribution/Inverter.h>
 #include <xylose/distribution/Gaussian.h>
 
@@ -48,6 +49,7 @@ static const double nm2 = nm*nm;
 /** The temperature of the entire population. */
 const static double temperature = 100 * K;
 
+typedef xylose::random::Kiss RNG;
 
 int main() {
   namespace filter = chimp::interaction::filter;
@@ -55,6 +57,7 @@ int main() {
   typedef chimp::RuntimeDB<> DB;
 
   DB db;
+  RNG rng;
 
   /* load information from XML file. */
   db.addParticleType("87Rb");
@@ -146,7 +149,7 @@ int main() {
      * that should occur.  
      * The .second<double> component is the cross section value of this
      * particular interaction for the given relative velocity.   */
-    std::pair<int,double> path = i->calculateOutPath(m_s_v, v_rel);
+    std::pair<int,double> path = i->calculateOutPath(m_s_v, v_rel, rng);
 
     i->print(std::cout << "Performing test interactions for:", db) << '\n';
     if ( path.first < 0 )
