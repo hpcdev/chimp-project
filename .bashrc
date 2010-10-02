@@ -43,9 +43,9 @@ export -f parse_git_dirty
 export -f parse_git_branch
 
 if [ "$color_prompt" = yes ]; then
-    export PS1='\u@\h:\[\033[1;33m\]\w\[\033[0m\]$(parse_git_branch)$ '
+    export PS1='\u@\h:\[\033[1;33m\]\W\[\033[0m\]$(parse_git_branch)$ '
 else
-    export PS1='\u@\h:\w$(parse_git_branch)$ '
+    export PS1='\u@\h:\W$(parse_git_branch)$ '
 fi
 
 function gstat {
