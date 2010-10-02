@@ -1,6 +1,6 @@
 #!/bin/bash
 
-TOP_DIR=$( readlink -n -f $(dirname $0) )
+TOP_DIR=$( readlink -n -f $(dirname $BASH_SOURCE) )
 
 if [ "$1" = "--do-not-start-shell" ] ; then
     START_SHELL="no"
