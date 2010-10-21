@@ -5,6 +5,8 @@ TOP_DIR=$( readlink -n -f $(dirname $BASH_SOURCE) )
 if [ "$1" = "--do-not-start-shell" ] ; then
     START_SHELL="no"
     shift 1
+elif [ "$BASH_SOURCE" != "$0" ] ; then
+    START_SHELL="no"
 else
     START_SHELL="yes"
 fi;
