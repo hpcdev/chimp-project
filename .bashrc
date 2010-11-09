@@ -3,4 +3,4 @@ if [ -f $HOME/.bashrc ]; then
     . $HOME/.bashrc
 fi
 
-source $(dirname $BASH_SOURCE)/.git-completion.bash
+source ${PROJECT_SHELL_DIR}/.git-completion.bash
