@@ -1,0 +1,9 @@
+project /chimp-project ;
+
+# These should be loaded in order of dependence.
+use-project /boost : boost ;
+use-project /physical : physical ;
+use-project /xylose : xylose ;
+use-project /chimp : chimp ;
+
+
